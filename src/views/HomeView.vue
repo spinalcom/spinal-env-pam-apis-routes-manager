@@ -147,7 +147,9 @@ export default class TableComponent extends Vue {
       cancelButtonText: "Annuler",
       buttonsStyling: false,
       icon: "warning",
-    }).then(async (result) => {
+    }).then(async ({ isConfirmed }) => {
+      if (!isConfirmed) return;
+
       const isSuccess = await this.removeCallback(items);
 
       this.$swal({
@@ -225,5 +227,25 @@ $header-height: 70px;
     border-radius: 10px;
     background: #f5f3f3;
   }
+}
+</style>
+
+<style>
+.successBtn {
+  width: 60px !important;
+  height: 40px;
+  border: 1px solid green;
+  color: green;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.errorBtn {
+  width: 75px !important;
+  height: 40px;
+  border: 1px solid #ff5252;
+  color: #ff5252;
+  border-radius: 5px;
+  margin: 5px;
 }
 </style>
