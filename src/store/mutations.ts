@@ -22,26 +22,20 @@
  * <http://resources.spinalcom.com/licenses.pdf>.
  */
 
-import Vue from 'vue'
-import App from './App.vue'
-import store from './store'
-import vuetify from './plugins/vuetify'
 
-import VueSweetalert2 from 'vue-sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
+// BOS
 
-Vue.use(VueSweetalert2, {
-  confirmButtonColor: '#41b882',
-  cancelButtonColor: '#ff7674',
-});
+export const CREATE_BOS_API_ROUTE = "CREATE_BOS_API_ROUTE";
+export const UPDATE_BOS_API_ROUTE = "UPDATE_BOS_API_ROUTE";
+export const GET_BOS_API_ROUTE = "GET_BOS_API_ROUTE";
+export const SET_ALL_BOS_API_ROUTE = "SET_ALL_BOS_API_ROUTE";
+export const DELETE_BOS_API_ROUTE = "DELETE_BOS_API_ROUTE";
 
-Vue.config.productionTip = false
-import "./assets/css/basic/reset.css";
-import "./assets/css/basic/main.css";
-import "./assets/css/component/navPickerApp.css";
 
-new Vue({
-  store,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
+// PORTOFOLIO
+
+export const CREATE_PORTOFOLIO_API_ROUTE = "CREATE_PORTOFOLIO_API_ROUTE";
+export const UPDATE_PORTOFOLIO_API_ROUTE = "UPDATE_PORTOFOLIO_API_ROUTE";
+export const GET_PORTOFOLIO_API_ROUTE = "GET_PORTOFOLIO_API_ROUTE";
+export const SET_ALL_PORTOFOLIO_API_ROUTE = "SET_ALL_PORTOFOLIO_API_ROUTE";
+export const DELETE_PORTOFOLIO_API_ROUTE = "DELETE_PORTOFOLIO_API_ROUTE";

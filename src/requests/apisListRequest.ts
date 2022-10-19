@@ -26,28 +26,63 @@ const baseURL = "http://localhost:8065/api/v1/pam";
 
 const HTTP = axios.create({ baseURL });
 
-export function createApiRouteRequest(data: any) {
-    return HTTP.post(`/create_api_route`, data);
+
+//////////////////////////////////////////
+//              BOS                     //
+//////////////////////////////////////////
+export function createBosApiRouteRequest(data: any) {
+    return HTTP.post(`/create_bos_api_route`, data);
 }
 
-export function updateApiRouteRequest(id: string, newData: any) {
-    return HTTP.put(`/update_api_route/${id}`, newData);
+export function updateBosApiRouteRequest(id: string, newData: any) {
+    return HTTP.put(`/update_bos_api_route/${id}`, newData);
 }
 
-export function getApiRouteByIdRequest(id: string) {
-    return HTTP.get(`/get_api_route/${id}`);
+export function getBosApiRouteByIdRequest(id: string) {
+    return HTTP.get(`/get_bos_api_route/${id}`);
 }
 
-export function getAllApiRouteRequest() {
-    return HTTP.get(`/get_all_api_route`);
+export function getAllBosApiRouteRequest() {
+    return HTTP.get(`/get_all_bos_api_route`);
 }
 
-export function deleteApiRouteRequest(id: string) {
-    return HTTP.delete(`/delete_api_route/${id}`);
+export function deleteBosApiRouteRequest(id: string) {
+    return HTTP.delete(`/delete_bos_api_route/${id}`);
 }
 
-export function uploadFile(fileData: any) {
-    return HTTP.post(`/upload_apis_routes`, fileData, {
+export function uploadBosApisFile(fileData: any) {
+    return HTTP.post(`/upload_bos_apis_routes`, fileData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}
+
+//////////////////////////////////////////
+//              PORTOFOLIO              //
+//////////////////////////////////////////
+export function createPortofolioApiRouteRequest(data: any) {
+    return HTTP.post(`/create_portofolio_api_route`, data);
+}
+
+export function updatePortofolioApiRouteRequest(id: string, newData: any) {
+    return HTTP.put(`/update_portofolio_api_route/${id}`, newData);
+}
+
+export function getPortofolioApiRouteByIdRequest(id: string) {
+    return HTTP.get(`/get_portofolio_api_route/${id}`);
+}
+
+export function getAllPortofolioApiRouteRequest() {
+    return HTTP.get(`/get_all_portofolio_api_route`);
+}
+
+export function deletePortofolioApiRouteRequest(id: string) {
+    return HTTP.delete(`/delete_portofolio_api_route/${id}`);
+}
+
+export function uploadPortofolioApisFile(fileData: any) {
+    return HTTP.post(`/upload_portofolio_apis_routes`, fileData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }

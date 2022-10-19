@@ -23,22 +23,22 @@ with this file. If not, see
 -->
 
 <template>
-  <v-app>
+  <v-app style="background-color: #e5edef;">
     <v-main>
-      <Home />
+      <HomeView />
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import Home from "./components/Home.vue";
+import HomeView from "./views/HomeView.vue";
 
 export default Vue.extend({
   name: "App",
 
   components: {
-    Home,
+    HomeView,
   },
 
   data: () => ({

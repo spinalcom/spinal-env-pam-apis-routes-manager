@@ -22,26 +22,16 @@
  * <http://resources.spinalcom.com/licenses.pdf>.
  */
 
-import Vue from 'vue'
-import App from './App.vue'
-import store from './store'
-import vuetify from './plugins/vuetify'
+export interface IApiRoute {
+    id?: string;
+    group: string;
+    method: string;
+    route: string;
+    scoped: string;
+    tag: string;
+}
 
-import VueSweetalert2 from 'vue-sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
-
-Vue.use(VueSweetalert2, {
-  confirmButtonColor: '#41b882',
-  cancelButtonColor: '#ff7674',
-});
-
-Vue.config.productionTip = false
-import "./assets/css/basic/reset.css";
-import "./assets/css/basic/main.css";
-import "./assets/css/component/navPickerApp.css";
-
-new Vue({
-  store,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
+export interface IState {
+    bosApis: IApiRoute[];
+    portofolioApis: IApiRoute[];
+}

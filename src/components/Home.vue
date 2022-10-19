@@ -25,50 +25,59 @@ with this file. If not, see
 <template>
   <v-container class="container"
                fluid>
-    <div class="header">
+    <!-- <div class="header">
       <v-card class="btnCard">
 
-        <v-btn class="button"
-               @click="uploadApiFile"
-               color="#14202c">
-          <v-icon class="btnIcon">
-            mdi-file-upload
-          </v-icon>
-
-          Upload Swagger File
-        </v-btn>
+      
       </v-card>
-    </div>
+    </div> -->
 
-    <v-card class="tableCard">
+    <div class="tableCard">
       <div class="toolbar">
-        <div class="_title">liste des apis </div>
-        <div class="searchDiv">
-          <v-text-field solo
-                        prepend-inner-icon="mdi-magnify"
-                        flat
-                        label="rechercher"
-                        hide-details="auto"
-                        v-model.trim="searchQuery"></v-text-field>
+        <div class="left">
+          <div class="_title">liste des apis </div>
+          <div class="searchDiv">
+            <v-text-field solo
+                          prepend-inner-icon="mdi-magnify"
+                          flat
+                          label="rechercher"
+                          hide-details="auto"
+                          v-model.trim="searchQuery"></v-text-field>
+          </div>
         </div>
+
+        <div class="right">
+          <v-btn class="button"
+                 @click="uploadApiFile"
+                 color="#14202c">
+            <v-icon class="btnIcon">
+              mdi-file-upload
+            </v-icon>
+
+            Upload Swagger File
+          </v-btn>
+        </div>
+
       </div>
       <v-divider></v-divider>
 
       <div class="table-container">
         <table-component :items="searchedData"
-                         :headers="headers"></table-component>
+                         :headers="headers"
+                         @delete="deleteItems"></table-component>
       </div>
 
-    </v-card>
+    </div>
   </v-container>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Watch } from "vue-property-decorator";
+import { Component, Prop, Watch } from "vue-property-decorator";
 import TableComponent from "./tableComponent.vue";
 import { Getter, Action } from "vuex-class";
 import Fuse from "fuse.js";
+import { IApiRoute } from "@/interfaces";
 
 @Component({
   components: {
@@ -76,33 +85,20 @@ import Fuse from "fuse.js";
   },
 })
 export default class HomeComponent extends Vue {
+  @Prop() headers!: { text: string; value: string }[];
+  @Prop() apis!: any;
+
   searchedData: any[] = [];
   fuseSearch: any;
   searchQuery: string = "";
   debounce: any = undefined;
 
-  headers = [
-    { text: "Nom", value: "name" },
-    { text: "Scope", value: "scope" },
-    { text: "Methodes", value: "method" },
-  ];
-
-  @Getter apis!: any[];
-
-  @Action createApiRoute!: any;
-  @Action updateApiRoute!: any;
-  @Action getAllApiRoute!: any;
-  @Action deleteApiRoute!: any;
-  @Action uploadSwaggerFile!: any;
-
   async mounted() {
-    await this.getAllApiRoute();
-
     // this.fuseSearch = new Fuse(Object.assign([], this.apis), {
     //   isCaseSensitive: false,
     //   keys: ["name", "children.route"],
     // });
-    this.searchedData = Object.assign([], this.apis);
+    this.searchedData = this.filterApisData(this.searchQuery);
   }
 
   uploadApiFile() {
@@ -130,7 +126,7 @@ export default class HomeComponent extends Vue {
 
         var formData = new FormData();
         formData.append("file", file);
-        this.uploadSwaggerFile(formData);
+        this.$emit("upload", formData);
 
         // const reader = new FileReader();
 
@@ -146,6 +142,10 @@ export default class HomeComponent extends Vue {
     );
   }
 
+  deleteItems(items: IApiRoute[]) {
+    this.$emit("delete", items);
+  }
+
   @Watch("searchQuery")
   watchSearchText(value: string) {
     clearTimeout(this.debounce);
@@ -159,7 +159,14 @@ export default class HomeComponent extends Vue {
     }, 400);
   }
 
+  @Watch("apis")
+  watchApis() {
+    this.searchedData = this.filterApisData(this.searchQuery);
+  }
+
   filterApisData(value: string) {
+    if (!this.apis) return [];
+
     return this.apis.reduce((liste: any, item: any) => {
       const temp = Object.assign({}, item);
       temp.children = item.children.filter((el: any) =>
@@ -174,65 +181,77 @@ export default class HomeComponent extends Vue {
 </script>
 
 <style lang="scss">
-$header-height: 60px;
-$page-background: #f5f3f3;
 $toolbar-height: 120px;
 
 .container {
-  width: 100vw;
-  height: 100vh;
-  background-color: #e5edef;
-  $header-margin-bottom: 10px;
+  width: 100%;
+  height: 100%;
 
-  .header {
-    width: 100%;
-    height: $header-height;
-    margin-bottom: $header-margin-bottom;
-    display: flex;
-    justify-content: flex-end;
+  // .header {
+  //   width: 100%;
+  //   height: $header-height;
+  //   margin-bottom: $header-margin-bottom;
+  //   display: flex;
+  //   justify-content: flex-end;
 
-    .btnCard {
-      min-width: 250px;
-      height: $header-height;
-      border-radius: 7px;
-      padding: 10px;
-      background-color: $page-background !important;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  //   .btnCard {
+  //     min-width: 250px;
+  //     height: $header-height;
+  //     border-radius: 7px;
+  //     padding: 10px;
+  //     background-color: $page-background !important;
+  //     display: flex;
+  //     justify-content: center;
+  //     align-items: center;
 
-      .button {
-        height: 100%;
-        color: #fff;
+  //     .button {
+  //       height: 100%;
+  //       color: #fff;
 
-        .btnIcon {
-          margin-right: 5px;
-        }
-      }
-    }
-  }
+  //       .btnIcon {
+  //         margin-right: 5px;
+  //       }
+  //     }
+  //   }
+  // }
 
   .tableCard {
-    padding: 10px;
-    background-color: $page-background !important;
     width: 100%;
-    height: calc(100% - #{$header-height + $header-margin-bottom});
-    border-radius: 10px;
+    padding: 10px;
 
     .toolbar {
       width: 100%;
       height: $toolbar-height !important;
       display: flex;
-      flex-direction: column;
-      justify-content: space-around;
+      justify-content: space-between;
 
-      ._title {
-        text-transform: uppercase;
+      .left {
+        width: 49%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        ._title {
+          text-transform: uppercase;
+        }
       }
-    }
 
-    .table-container {
-      height: calc(100% - #{$toolbar-height}) !important;
+      .right {
+        display: flex;
+        align-items: center;
+        .button {
+          // height: 100%;
+          color: #fff;
+
+          .btnIcon {
+            margin-right: 5px;
+          }
+        }
+      }
+
+      .table-container {
+        height: calc(100% - #{$toolbar-height}) !important;
+      }
     }
   }
 }

@@ -43,6 +43,7 @@ with this file. If not, see
               {{headerItem.text}}
             </th>
             <th class="expandedColumn"></th>
+            <th class="expandedColumn"></th>
           </tr>
         </thead>
       </template>
@@ -52,6 +53,13 @@ with this file. If not, see
           <td @click="expand(item)">{{item.name}}</td>
           <td @click="expand(item)"></td>
           <td @click="expand(item)"></td>
+          <td @click="expand(item)">
+            <v-btn icon
+                   color="pink"
+                   @click.stop="deleteItem(item.children)">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </td>
           <td @click="expand(item)">
             <v-btn icon
                    x-small
@@ -78,6 +86,13 @@ with this file. If not, see
             {{ child.method }}
           </td>
           <td></td>
+          <td>
+            <v-btn icon
+                   color="pink"
+                   @click="deleteItem(child)">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </td>
         </tr>
       </template>
     </v-data-table>
@@ -86,6 +101,7 @@ with this file. If not, see
 </template>
 
 <script lang="ts">
+import { IApiRoute } from "@/interfaces";
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 
@@ -112,6 +128,12 @@ export default class TableComponent extends TableComponentProps {
   IsExpanded(item: any) {
     return this.expanded.find((el: any) => el.name === item.name);
   }
+
+  deleteItem(items: IApiRoute | IApiRoute[]) {
+    if (!Array.isArray(items)) items = [items];
+
+    this.$emit("delete", items);
+  }
 }
 </script>
 
@@ -120,14 +142,14 @@ $expand-column-width: 50px;
 
 .tableContainer {
   width: 100%;
-  height: 100%;
   background: transparent !important;
   overflow: auto;
 
   #table {
     width: 100%;
+    max-height: 74vh;
     background: transparent !important;
-    max-height: calc(100% - 15px);
+
     overflow: auto;
     // colgroup {
     //   col {
