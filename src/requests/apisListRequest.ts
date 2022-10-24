@@ -22,9 +22,11 @@
  * <http://resources.spinalcom.com/licenses.pdf>.
  */
 import axios from "axios";
-const baseURL = process.env.SPINAL_API_URL;
+const endpoint = "/api/v1/pam";
+const host = (process.env.SPINAL_API_URL || "").replace(`/\/$/`, el => "");
+const baseURL = host.match(new RegExp(endpoint)) ? host : host + endpoint;
 
-const HTTP = axios.create({ baseURL: `${baseURL}/api/v1/pam` });
+export const HTTP = axios.create({ baseURL });
 
 
 //////////////////////////////////////////
