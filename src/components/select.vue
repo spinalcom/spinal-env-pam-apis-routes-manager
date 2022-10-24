@@ -50,7 +50,7 @@ import categories from "../store/categories";
 import { SpaceSelector } from "./SpaceSelector/index";
 import type { IZoneItem } from "./SpaceSelector/interfaces/IBuildingItem";
 
-export default {
+const SelectComponent = {
   components: {
     SpaceSelector,
   },
@@ -112,6 +112,8 @@ export default {
     // },
   },
 };
+
+export default SelectComponent;
 </script>
   
   <style lang="scss">

@@ -22,9 +22,9 @@
  * <http://resources.spinalcom.com/licenses.pdf>.
  */
 import axios from "axios";
-const baseURL = "http://localhost:8065/api/v1/pam";
+const baseURL = process.env.SPINAL_API_URL;
 
-const HTTP = axios.create({ baseURL });
+const HTTP = axios.create({ baseURL: `${baseURL}/api/v1/pam` });
 
 
 //////////////////////////////////////////

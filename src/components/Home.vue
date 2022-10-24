@@ -84,7 +84,7 @@ import { IApiRoute } from "@/interfaces";
     TableComponent,
   },
 })
-export default class HomeComponent extends Vue {
+class HomeComponent extends Vue {
   @Prop() headers!: { text: string; value: string }[];
   @Prop() apis!: any;
 
@@ -178,6 +178,8 @@ export default class HomeComponent extends Vue {
     }, []);
   }
 }
+
+export default HomeComponent;
 </script>
 
 <style lang="scss">

@@ -55,7 +55,7 @@ type updateFunc = (param: { id: string; data: IApiRoute }) => Promise<void>;
     Home,
   },
 })
-export default class TableComponent extends Vue {
+class TableComponent extends Vue {
   @State bosApis!: any;
   @State portofolioApis!: any;
 
@@ -207,6 +207,8 @@ export default class TableComponent extends Vue {
       this.apis = this.portofolioApisGet;
   }
 }
+
+export default TableComponent;
 </script>
 
 <style lang="scss">
@@ -221,11 +223,11 @@ $header-height: 70px;
   }
 
   .myCard {
-    width: 99%;
-    height: calc(100vh - #{$header-height + 20});
-    margin: auto;
-    border-radius: 10px;
+    width: 97%;
+    height: calc(100vh - 90px);
     background: #f5f3f3;
+    border-radius: 10px !important;
+    margin: auto;
   }
 }
 </style>

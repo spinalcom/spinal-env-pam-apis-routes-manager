@@ -110,7 +110,7 @@ const TableComponentProps = Vue.extend({
 });
 
 @Component
-export default class TableComponent extends TableComponentProps {
+class TableComponent extends TableComponentProps {
   // @Prop({ default: [] }) headers!: any[];
   // @Prop({ default: [] }) items!: any[];
 
@@ -135,6 +135,8 @@ export default class TableComponent extends TableComponentProps {
     this.$emit("delete", items);
   }
 }
+
+export default TableComponent;
 </script>
 
 <style lang="scss">
